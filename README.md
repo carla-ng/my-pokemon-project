@@ -1,5 +1,9 @@
 # my-pokemon-project
 
+
+## Credits
+Icons: https://freesvg.org/
+
 ## Project setup
 ```
 npm install
