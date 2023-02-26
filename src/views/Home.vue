@@ -4,7 +4,7 @@
         <p class="poketext mt-8 ml-auto mr-auto max-w-sm">Here you can find some categories to choose from to learn more about the world of Pokémon!</p>
 
         <ul class="categories mt-9 ml-auto mr-auto max-w-md">
-            <li class="categories__element brand-color-01-background">
+            <li class="categories__element brand-color-01-background" @click="$router.push({name: 'PokemonList'})">
                 <span class="categories__element__text">Pokédex</span>
                 <img class="categories__element__svg" :src="pokeballSVG" alt="Pokeball" />
             </li>
@@ -19,9 +19,10 @@
 export default {
     name: 'Home',
     components: {
+        
 
     },
-    data(){
+    setup() {
         return {
             pokeballSVG: require('@/assets/svg/pokeball.svg')
         }
@@ -30,7 +31,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 $breakpoint-max-mobile: 767px;
 $breakpoint-min-desktop: 768px;
 
