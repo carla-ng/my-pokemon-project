@@ -4,7 +4,7 @@
 
         <img class="pokemon-list-element-image mx-auto block" :src="pokemon.sprites.front_default" :alt="'Image of ' + pokemon.name"/>
 
-        <div class="pokemon-list-element-name text-lg capitalize font-semibold text-white">{{ pokemon.name }}</div>
+        <div class="pokemon-list-element-name text-lg capitalize font-semibold text-white truncate">{{ pokemon.name }}</div>
 
         <div class="pokemon-list-element-number text-white">{{ pokemon.id.toString().padStart(3, '0') }}</div>
 
@@ -34,6 +34,8 @@
   <style lang="scss" scoped>
   .pokemon-list-element {
     min-width: 150px;
+
+    @media (min-width: 992px) { max-width: 150px; }
 
     background-color: #b9b7b7;
     .pokemon-list-element-types {
