@@ -1,6 +1,6 @@
 <template>
 
-    <div class="pokemon-list-element p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
+    <router-link :to="`/pokemon/${pokemon.id}`" class="pokemon-list-element p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
 
         <img class="pokemon-list-element-image mx-auto block" :src="pokemon.sprites.front_default" :alt="'Image of ' + pokemon.name"/>
 
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-    </div>
+    </router-link>
 
   </template>
   
