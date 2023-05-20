@@ -1,5 +1,5 @@
 # My Pokémon Project
-App with Pokémon info.
+Vue app with information about the world of Pokémon.
 
 <br/>
 
@@ -16,6 +16,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Vue
 * JavaScript
 * SCSS
+* TailwindCSS
 * [PokéApi](https://pokeapi.co/)
 
 <br/>
