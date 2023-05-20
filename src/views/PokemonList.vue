@@ -3,7 +3,7 @@
         Pokédex
     </div>
 
-    <div id="pokemon-list" class="max-w-4xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+    <div id="pokemon-list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
 
         <PokemonListElement
             v-for="pokemon in allPokemon"
@@ -102,5 +102,10 @@ export default {
 
 
 <style lang="scss" scoped>
-    
+    #pokemon-list {
+        @media (min-width: 992px) {
+            //max-width: 1140px;
+            //width: 90%;
+        }
+    }
 </style>

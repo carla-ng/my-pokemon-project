@@ -1,0 +1,36 @@
+
+// VARIABLES
+$pokemon-type-color: (
+    poison: #d296ed,
+    bug: #b3d374,
+    ground: #ff8054,
+    flying: #a2b3cb,
+    fairy: lightpink,
+    fighting: #ff7272,
+    psychic: plum,
+    dragon: silver,
+    dark: #7c7c7c,
+    ghost: #a0cad1,
+    steel: #a1a2a3,
+    rock: #a1a2a3,
+    ice: #89dceb,
+    electric: #89DCEB,
+    grass: #62d5b4,
+    fire: #ffa761,
+    water: #8bacf6
+);
+
+
+// TYPES
+@each $type, $color in $pokemon-type-color {
+    .#{$type} {
+        background-color: $color !important;
+        .pokemon-element-types { background-color: darken($color, 8%) !important; }
+    }
+}
+
+// STYLES
+.pokemon-element-types {
+    height: fit-content;
+    width: fit-content;
+}
