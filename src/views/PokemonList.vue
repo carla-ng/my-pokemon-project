@@ -3,7 +3,7 @@
         Pokédex
     </div>
 
-    <div id="pokemon-list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+    <div id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
 
         <PokemonListElement
             v-for="pokemon in allPokemon"
@@ -20,9 +20,9 @@
 
 
 <script>
-import PokemonListElement from './PokemonListElement.vue';
+import PokemonListElement from '@/components/PokemonListElement.vue';
 
-import { onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, toRefs } from 'vue';
 
 export default {
     name: 'PokemonList',
@@ -102,7 +102,7 @@ export default {
 
 
 <style lang="scss" scoped>
-    #pokemon-list {
+    #pokemon__list {
         @media (min-width: 992px) {
             //max-width: 1140px;
             //width: 90%;
