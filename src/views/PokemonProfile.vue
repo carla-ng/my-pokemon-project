@@ -1,27 +1,30 @@
 <template>
-    <div id="pokemon-detail-view">
+    <div id="pokemon-detail-view" class="mx-3">
+
         <div v-if="loading">Loading...</div>
+
         <div v-else class="max-w-4xl ml-auto mr-auto pb-10">
+
             <div id="pokemon-main-info">
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <h2 class="text-3xl text-white text-left capitalize font-semibold mx-2" v-if="pokemon.name">{{ pokemon.name.replace('-', ' ') }}</h2>
+                <div class="flex flex-row justify-between items-end">
+                    <div id="pokemon-name-and-types">
+                        <h2 class="text-3xl text-white text-left capitalize font-semibold mx-1 text-ellipsis" v-if="pokemon.name">{{ pokemon.name.replace('-', ' ') }}</h2>
                         <div class="text-left mt-2 mx-1">
-                            <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon-element-types text-white capitalize px-2 py-1 rounded-lg text-sm mx-1">
+                            <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon-element-types text-white px-2 py-1 rounded-lg text-sm mx-1">
                                 {{ type.type.name }}
                             </span>
                         </div>
                     </div>
-                    <div class="text-3xl text-white mx-2">
+
+                    <div id="pokemon-id" class="text-2xl text-white mx-1">
                         <span>#{{ pokemon.id }}</span>
                     </div>
                 </div>
                 
-
                 <img v-if="pokemon.sprites" :src="pokemon.sprites.other['official-artwork'].front_default" :alt="pokemon.name" class="ml-auto mr-auto" />
-            </div>            
+            </div>
             
-            <div id="pokemon-detailed-info" class="bg-white rounded-3xl px-8 pb-8 pt-16 mx-3">
+            <div id="pokemon-detailed-info" class="bg-white rounded-3xl px-8 pb-8 pt-16">
                 <ul class="flex flex-row items-start justify-between pb-4">
                     <li @click="activeTab = 'about'" :class="{ 'active': activeTab === 'about' }">About</li>
                     <li @click="activeTab = 'base-stats'" :class="{ 'active': activeTab === 'base-stats' }">Base Stats</li>
@@ -29,6 +32,7 @@
                     <li @click="activeTab = 'moves'" :class="{ 'active': activeTab === 'moves' }">Moves</li>
                 </ul>
 
+                <!-- ABOUT -->
                 <div id="about" v-if="activeTab === 'about'">
                     <table>
                         <tr v-if="pokemon.species">
@@ -37,11 +41,11 @@
                         </tr>
                         <tr>
                             <td>Height</td>
-                            <td>{{ pokemon.height }}</td>
+                            <td>{{ pokemon.height }}cm</td>
                         </tr>
                         <tr>
                             <td>Weight</td>
-                            <td>{{ pokemon.weight }}</td>
+                            <td>{{ pokemon.weight }}kg</td>
                         </tr>
                         <tr>
                             <td>Abilities</td>
@@ -55,6 +59,7 @@
                     </table>
                 </div>
 
+                <!-- BASE STATS -->
                 <div id="base-stats" v-if="activeTab === 'base-stats'">
                     <table>
                         <tr>
@@ -84,6 +89,7 @@
                     </table>
                 </div>
 
+                <!-- EVOLUTION -->
                 <div id="evolution" v-if="activeTab === 'evolution'">
                     <span v-for="(evolution, index) in evolutions" :key="evolution.name" class="capitalize">
                         <span v-if="index !== 0">,</span>
@@ -91,11 +97,12 @@
                     </span>
                 </div>
 
+                <!-- MOVES -->
                 <div id="moves" v-if="activeTab === 'moves'">
                     <table>
                         <tr>
                             <th class="text-left">Move</th>
-                            <th>Level learned at</th>
+                            <th>Level</th>
                         </tr>
                         <tr v-for="(move, index) in pokemon.moves" :key="move.name" class="capitalize">
                             <td>{{ move.move.name.replace('-', ' ') }}</td>
@@ -111,20 +118,21 @@
   
 
   <script>
-  import { ref, onMounted, watch } from 'vue';
+  import { ref, onBeforeUnmount, onMounted, watch } from 'vue';
   import { useRoute } from 'vue-router';
   
   export default {
     name: 'PokemonProfile',
     setup() {
-        const route = useRoute()
-        const loading = ref(false)
-        const pokemon = ref({})
+        const route = useRoute()          // needed to get current pokemon id
+
+        const loading = ref(false)       // loader while waiting to receive pokemon info
+        const pokemon = ref({})          // where current pokemon info is stored
 
         const activeTab = ref('about')  // sets the initial active tab
 
-        const pokemonTypes = ref()
-        const evolutions = ref([])
+        let pokemonTypes = ref()
+        const evolutions = ref([])      // current pokemon evolutions
   
 
         // fetch individual pokemon info from pokeapi
@@ -135,14 +143,13 @@
                 if ( !response.ok ) {
                     throw new Error('Failed to fetch data from the PokeAPI')
                 }
-
                 const data = await response.json()
-
                 console.log(data)
 
-                // adding types as classes to body element to add type color
+                // adding types as classes to body tag to add type color
                 const pokemonTypeNames = data.types.map(type => type.type.name)
                 document.body.classList.add(...pokemonTypeNames)
+                pokemonTypes = pokemonTypeNames
 
                 // add zeroes to pokemon id if it is less than 100
                 if ( data.id < 100 ) {
@@ -150,8 +157,14 @@
                 } else {
                     data.id = data.id.toString()
                 }
+
+                // height - transform from decimeters to centimeters
+                data.height = data.height * 10
+
+                // weight - transform from hectograms to kilograms
+                data.weight = data.weight / 10
         
-                // Pokemon object
+                // pokemon object
                 Object.assign(pokemon.value, data)
             } catch (error) {
                 console.error(error)
@@ -195,8 +208,8 @@
                 name: species.name
             })
 
-            if (evolves_to.length) {
-                evolves_to.forEach((evolution) => {
+            if ( evolves_to.length ) {
+                evolves_to.forEach(( evolution ) => {
                     const subEvolutions = parseEvolutionChain(evolution)
                     evolutionsData.push(...subEvolutions)
                 })
@@ -217,17 +230,23 @@
 
         // fetch information on component mount
         onMounted(() => {
-            fetchPokemon(route.params.id); // fetch pokemon data
-            fetchEvolutions(route.params.id);  // fetch pokemon evolutions
+            fetchPokemon(route.params.id);      // fetch pokemon data
+            fetchEvolutions(route.params.id);   // fetch pokemon evolutions
+        })
+
+
+        // remove pokemon types classes from body tag before leaving view
+        onBeforeUnmount(() => {
+            document.body.classList.remove(...pokemonTypes)
         })
 
 
         return {
-            pokemon,
-            loading,
             activeTab,
+            evolutions,
+            loading,
+            pokemon,
             pokemonTypes,
-            evolutions
         };
     },
   };
@@ -269,8 +288,14 @@
 
             table {
                 tr {
+                    th {
+                        padding: 3px 12px;
+                    }
+                    
                     td {
+                        padding: 3px 12px;
                         text-align: left;
+
                         &:first-child {
                             color: grey;
                         }
