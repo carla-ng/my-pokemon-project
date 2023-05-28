@@ -1,5 +1,10 @@
 <template>
+
     <div id="pokemon-detail-view" class="mx-3">
+
+        <div @click="$router.push({name: 'PokemonList'})" class="max-w-4xl ml-auto mr-auto mb-5 text-white text-md text-left cursor-pointer">
+            Go back
+        </div>
 
         <div v-if="loading">Loading...</div>
 
@@ -90,18 +95,48 @@
                 </div>
 
                 <!-- EVOLUTION -->
-                <div id="evolution" v-if="activeTab === 'evolution'" class="flex flex-row justify-center flex-wrap">
+                <div id="evolution" v-if="activeTab === 'evolution'" class="flex flex-column justify-center flex-wrap max-w-lg mx-auto my-0">
                     <div v-for="(evolution, index) in evolutions" :key="evolution.name" class="evolution-element mx-6 my-4">
-                        <router-link v-if="evolution.id != pokemon.originalPokemonId" :to="`/pokemon/${evolution.id}`">
-                            <img :src="evolution.image" :alt="evolution.name">
-                            <span class="capitalize text-lg">{{ evolution.name }}</span>
-                            <div class="text-sm">Trigger: {{ evolution.evolutionTrigger.replace('-', ' ') }}</div>
+                        <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-row flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'current-pokemon' : '']">
+                            <img :src="evolution.image" :alt="evolution.name" class="mx-4">
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td class="capitalize">{{ evolution.name }}</td>
+                                    </tr>
+
+                                    <template v-for="(evolutionDetail, i) in evolutions[index-1].evolutionDetails"
+                                              v-if="evolutions[index-1] && evolutions[index-1].evolutionDetails"
+                                    >
+                                        <tr>
+                                            <td>Trigger #{{ i+1 }}</td>
+                                            <td class="capitalize">{{ evolutionDetail.trigger.name.replace('-', ' ') }}</td>
+                                        </tr>
+                                        
+                                        <!-- Level up -->
+                                        <tr v-if="evolutionDetail.trigger.name== 'level-up'">
+                                            <template v-if="evolutionDetail.min_level">
+                                                <td>Min. level</td>
+                                                <td class="capitalize">{{ evolutionDetail.min_level }}</td>
+                                            </template>
+                                            <template v-if="evolutionDetail.min_happiness">
+                                                <td>Min. happiness</td>
+                                                <td class="capitalize">{{ evolutionDetail.min_happiness }}</td>
+                                            </template>
+                                        </tr>
+
+                                        <!-- Use item -->
+                                        <tr v-if="evolutionDetail.trigger.name== 'use-item'">
+                                            <template v-if="evolutionDetail.item.name">
+                                                <td>Item</td>
+                                                <td class="capitalize">{{ evolutionDetail.item.name.replace('-', ' ') }}</td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </table>
+                            </div>
                         </router-link>
-                        <div v-else>
-                            <img :src="evolution.image" :alt="evolution.name">
-                            <span class="capitalize text-lg">{{ evolution.name }}</span>
-                            <div class="text-sm">Trigger: {{ evolution.evolutionTrigger.replace('-', ' ') }}</div>
-                        </div>
                     </div>
                 </div>
 
@@ -212,10 +247,11 @@
                 }
 
                 const evolutionChainData = await evolutionChainResponse.json()
-                console.log('evolutionChainData')
-                console.log(evolutionChainData)
                 const evolutionsData = await parseEvolutionChain(evolutionChainData.chain)
                 evolutions.value = evolutionsData
+
+                // console.log('evolutions.value')
+                // console.log(evolutions.value)
             } catch (error) {
                 console.error(error)
             }
@@ -229,7 +265,15 @@
 
             const id = species.url.split('/').slice(-2, -1)[0]
             const name = species.name
-            const evolutionTrigger = chain.evolves_to[0].evolution_details[0].trigger.name
+
+            console.log('chain')
+            console.log(chain)
+
+
+            let evolutionDetails = ''
+            if ( chain.evolves_to.length > 0 && chain.evolves_to[0].evolution_details.length > 0 ) {
+                evolutionDetails = chain.evolves_to[0].evolution_details
+            }
 
             try {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -243,7 +287,7 @@
                     id,
                     name,
                     image,
-                    evolutionTrigger
+                    evolutionDetails
                 })
 
                 if ( evolves_to.length ) {
@@ -271,7 +315,10 @@
                 }
 
                 const data = await response.json()
-                moveInfo = data.effect_entries[0].short_effect
+                if ( data.effect_entries.length ) {
+                    moveInfo = data.effect_entries[0].short_effect
+                }
+                
             } catch (error) {
                 console.error(error)
             }
@@ -325,7 +372,7 @@
         }
 
         #pokemon-detailed-info {
-            margin-top: -70px;
+            margin-top: -60px;
 
             ul {
                 li {
@@ -370,11 +417,12 @@
 
             #evolution {
                 .evolution-element {
-                    width: 55%;
-                    @media (min-width: 992px) { width: 20%; }
-
-                    div {
-                        img { opacity: 0.6; }
+                    img {
+                        width: 45%;
+                        @media (min-width: 992px) { width: 20%; }
+                    }
+                    & > .current-pokemon {
+                        opacity: 0.6;
                     }
                 }
             }
