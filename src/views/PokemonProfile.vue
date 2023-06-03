@@ -96,9 +96,10 @@
 
                 <!-- EVOLUTION -->
                 <div id="evolution" v-if="activeTab === 'evolution'" class="flex flex-column justify-center flex-wrap max-w-lg mx-auto my-0">
-                    <div v-for="(evolution, index) in evolutions" :key="evolution.name" class="evolution-element mx-6 my-4">
-                        <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-row flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'current-pokemon' : '']">
+                    <div v-for="(evolution, index) in evolutionChain " :key="evolution.id" class="evolution-element mx-6 my-4">
+                        <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'current-pokemon' : '']">
                             <img :src="evolution.image" :alt="evolution.name" class="mx-4">
+
                             <div>
                                 <table>
                                     <tr>
@@ -106,36 +107,24 @@
                                         <td class="capitalize">{{ evolution.name }}</td>
                                     </tr>
 
-                                    <template v-for="(evolutionDetail, i) in evolutions[index-1].evolutionDetails"
-                                              v-if="evolutions[index-1] && evolutions[index-1].evolutionDetails"
-                                    >
+                                    <template v-if="evolution.evolutionDetails && evolution.evolutionDetails.trigger && evolution.evolutionDetails.trigger.name">
                                         <tr>
-                                            <td>Trigger #{{ i+1 }}</td>
-                                            <td class="capitalize">{{ evolutionDetail.trigger.name.replace('-', ' ') }}</td>
-                                        </tr>
-                                        
-                                        <!-- Level up -->
-                                        <tr v-if="evolutionDetail.trigger.name== 'level-up'">
-                                            <template v-if="evolutionDetail.min_level">
-                                                <td>Min. level</td>
-                                                <td class="capitalize">{{ evolutionDetail.min_level }}</td>
-                                            </template>
-                                            <template v-if="evolutionDetail.min_happiness">
-                                                <td>Min. happiness</td>
-                                                <td class="capitalize">{{ evolutionDetail.min_happiness }}</td>
-                                            </template>
-                                        </tr>
+                                        <td>Trigger</td>
+                                        <td class="capitalize">{{ evolution.evolutionDetails.trigger.name.replace('-', ' ') }}</td>
+                                    </tr>
 
-                                        <!-- Use item -->
-                                        <tr v-if="evolutionDetail.trigger.name== 'use-item'">
-                                            <template v-if="evolutionDetail.item.name">
-                                                <td>Item</td>
-                                                <td class="capitalize">{{ evolutionDetail.item.name.replace('-', ' ') }}</td>
-                                            </template>
-                                        </tr>
+                                        <!-- LEVEL UP -->
+                                        <template v-if="evolution.evolutionDetails.min_level">
+                                            <tr>
+                                                <td>Min. level</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.min_level }}</td>
+                                            </tr>
+                                        </template>
+
                                     </template>
                                 </table>
                             </div>
+                            
                         </router-link>
                     </div>
                 </div>
@@ -177,7 +166,7 @@
         const activeTab = ref('about')  // sets the initial active tab
 
         let pokemonTypes = ref()
-        const evolutions = ref([])      // current pokemon evolutions
+        const evolutionChain  = ref([])      // current pokemon evolutions
   
 
         // fetch individual pokemon info from pokeapi
@@ -232,77 +221,43 @@
         }
 
 
-        // fetch pokemon evolutions
-        const fetchEvolutions = async ( id ) => {
+        const fetchEvolutionChain = async (pokemonId) => {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-                if ( !response.ok ) {
-                    throw new Error('Failed to fetch evolutions data from the PokéAPI')
-                }
+                const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
+                const speciesData = await speciesResponse.json();
+                const evolutionChainUrl = speciesData.evolution_chain.url;
 
-                const data = await response.json()
-                const evolutionChainResponse = await fetch(data.evolution_chain.url)
-                if ( !evolutionChainResponse.ok ) {
-                    throw new Error('Failed to fetch evolution chain data from the PokéAPI')
-                }
+                const evolutionChainResponse = await fetch(evolutionChainUrl);
+                const evolutionChainData = await evolutionChainResponse.json();
 
-                const evolutionChainData = await evolutionChainResponse.json()
-                const evolutionsData = await parseEvolutionChain(evolutionChainData.chain)
-                evolutions.value = evolutionsData
-
-                // console.log('evolutions.value')
-                // console.log(evolutions.value)
+                const parsedEvolutionChain = parseEvolutionChain(evolutionChainData.chain);
+                evolutionChain.value = parsedEvolutionChain;
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
-        }
+        };
 
+        const parseEvolutionChain = (chain) => {
+            const evolutionsData = [];
+            const { species, evolves_to } = chain;
 
-        // parse the evolution chain data recursively to extract the evolution names
-        const parseEvolutionChain = async ( chain ) => {
-            const evolutionsData = []
-            const { species, evolves_to } = chain
+            evolutionsData.push({
+                id: species.url.split('/').slice(-2, -1)[0],
+                name: species.name,
+                image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${species.url.split('/').slice(-2, -1)[0]}.png`,
+                evolutionDetails: evolves_to[0]?.evolution_details[0] || null
+            });
 
-            const id = species.url.split('/').slice(-2, -1)[0]
-            const name = species.name
-
-            console.log('chain')
-            console.log(chain)
-
-
-            let evolutionDetails = ''
-            if ( chain.evolves_to.length > 0 && chain.evolves_to[0].evolution_details.length > 0 ) {
-                evolutionDetails = chain.evolves_to[0].evolution_details
-            }
-
-            try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                if ( !response.ok ) {
-                    throw new Error('Failed to fetch evolution image from the PokéAPI')
-                }
-                const data = await response.json()
-                const image = data.sprites.other['official-artwork'].front_default
-
-                evolutionsData.push({
-                    id,
-                    name,
-                    image,
-                    evolutionDetails
-                })
-
-                if ( evolves_to.length ) {
-                    for ( const evolution of evolves_to ) {
-                        const subEvolutions = await parseEvolutionChain(evolution)
-                        evolutionsData.push(...subEvolutions)
-                    }
-                }
-            } catch ( error ) {
-                console.error(error)
+            if (evolves_to.length) {
+                evolves_to.forEach((evolution) => {
+                const subEvolutions = parseEvolutionChain(evolution);
+                evolutionsData.push(...subEvolutions);
+                });
             }
 
-            return evolutionsData
-        }
-
+            return evolutionsData;
+        };
+        
 
         // fetch pokemon moves info
         const fetchMovesInfo = async ( moveUrl ) => {
@@ -338,8 +293,11 @@
 
         // fetch information on component mount
         onMounted(() => {
-            fetchPokemon(route.params.id);      // fetch pokemon data
-            fetchEvolutions(route.params.id);   // fetch pokemon evolutions
+            // fetch pokemon data
+            fetchPokemon(route.params.id)
+
+            // fetch pokemon evolutions
+            fetchEvolutionChain(route.params.id)
         })
 
 
@@ -351,7 +309,7 @@
 
         return {
             activeTab,
-            evolutions,
+            evolutionChain ,
             loading,
             pokemon,
             pokemonTypes,
@@ -417,9 +375,15 @@
 
             #evolution {
                 .evolution-element {
-                    img {
-                        width: 45%;
-                        @media (min-width: 992px) { width: 20%; }
+                    
+                    a {
+                        flex-direction: column;
+                        @media (min-width: 992px) { flex-direction: row; }
+
+                        img {
+                            width: 75%;
+                            @media (min-width: 992px) { width: 20%; }
+                        }
                     }
                     & > .current-pokemon {
                         opacity: 0.6;

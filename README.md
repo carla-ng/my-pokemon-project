@@ -21,6 +21,18 @@ https://carla-ng-my-pokemon-project.netlify.app/
 
 <br/>
 
+<br/>
+
+## To Do List / Possible Future Features
+* Search bar
+* Berries info
+* Locations info
+* Generations info
+* Rename CSS classes
+* Optimize everything
+
+<br/>
+
 ## Project setup
 ```
 npm install
