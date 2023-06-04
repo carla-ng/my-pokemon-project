@@ -109,15 +109,71 @@
 
                                     <template v-if="evolution.evolutionDetails && evolution.evolutionDetails.trigger && evolution.evolutionDetails.trigger.name">
                                         <tr>
-                                        <td>Trigger</td>
-                                        <td class="capitalize">{{ evolution.evolutionDetails.trigger.name.replace('-', ' ') }}</td>
-                                    </tr>
+                                            <td>Trigger</td>
+                                            <td class="capitalize">{{ evolution.evolutionDetails.trigger.name.replace('-', ' ') }}</td>
+                                        </tr>
 
-                                        <!-- LEVEL UP -->
+                                        <!-- TURN UPSIDE DOWN -->
+                                        <template v-if="evolution.evolutionDetails.turn_upside_down">
+                                            <tr>
+                                                <td>Turn Upside Down</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.turn_upside_down }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LOCATION -->
+                                        <template v-if="evolution.evolutionDetails.location && evolution.evolutionDetails.location.name">
+                                            <tr>
+                                                <td>Location</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.location.name.replace('-', ' ') }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LEVEL UP MIN LEVEL -->
                                         <template v-if="evolution.evolutionDetails.min_level">
                                             <tr>
                                                 <td>Min. level</td>
                                                 <td class="capitalize">{{ evolution.evolutionDetails.min_level }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LEVEL UP MIN HAPPINESS -->
+                                        <template v-if="evolution.evolutionDetails.min_happiness">
+                                            <tr>
+                                                <td>Min. happiness</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.min_happiness }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LEVEL UP MIN BEAUTY -->
+                                        <template v-if="evolution.evolutionDetails.min_beauty">
+                                            <tr>
+                                                <td>Min. beauty</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.min_beauty }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LEVEL UP MIN AFFECTION -->
+                                        <template v-if="evolution.evolutionDetails.min_affection">
+                                            <tr>
+                                                <td>Min. affection</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.min_affection }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- ITEM -->
+                                        <template v-if="evolution.evolutionDetails.item">
+                                            <tr>
+                                                <td>Item</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.item.name.replace('-', ' ') }}</td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- LEVEL UP MIN AFFECTION -->
+                                        <template v-if="evolution.evolutionDetails.relative_physical_stats">
+                                            <tr>
+                                                <td>Relative Physical Stats</td>
+                                                <td class="capitalize">{{ evolution.evolutionDetails.relative_physical_stats }}</td>
                                             </tr>
                                         </template>
 
@@ -221,41 +277,41 @@
         }
 
 
-        const fetchEvolutionChain = async (pokemonId) => {
+        const fetchEvolutionChain = async ( pokemonId ) => {
             try {
-                const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
-                const speciesData = await speciesResponse.json();
-                const evolutionChainUrl = speciesData.evolution_chain.url;
+                const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`)
+                const speciesData = await speciesResponse.json()
+                const evolutionChainUrl = speciesData.evolution_chain.url
 
-                const evolutionChainResponse = await fetch(evolutionChainUrl);
-                const evolutionChainData = await evolutionChainResponse.json();
+                const evolutionChainResponse = await fetch(evolutionChainUrl)
+                const evolutionChainData = await evolutionChainResponse.json()
 
-                const parsedEvolutionChain = parseEvolutionChain(evolutionChainData.chain);
-                evolutionChain.value = parsedEvolutionChain;
-            } catch (error) {
-                console.error(error);
+                const parsedEvolutionChain = parseEvolutionChain(evolutionChainData.chain)
+                evolutionChain.value = parsedEvolutionChain
+            } catch ( error ) {
+                console.error(error)
             }
         };
 
-        const parseEvolutionChain = (chain) => {
-            const evolutionsData = [];
-            const { species, evolves_to } = chain;
+        const parseEvolutionChain = ( chain ) => {
+            const evolutionsData = []
+            const { species, evolves_to } = chain
 
             evolutionsData.push({
                 id: species.url.split('/').slice(-2, -1)[0],
                 name: species.name,
                 image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${species.url.split('/').slice(-2, -1)[0]}.png`,
                 evolutionDetails: evolves_to[0]?.evolution_details[0] || null
-            });
+            })
 
-            if (evolves_to.length) {
+            if ( evolves_to.length ) {
                 evolves_to.forEach((evolution) => {
-                const subEvolutions = parseEvolutionChain(evolution);
-                evolutionsData.push(...subEvolutions);
-                });
+                    const subEvolutions = parseEvolutionChain(evolution)
+                    evolutionsData.push(...subEvolutions)
+                })
             }
 
-            return evolutionsData;
+            return evolutionsData
         };
         
 
@@ -287,6 +343,7 @@
             () => route.params.id,
             ( newId ) => {
                 fetchPokemon(newId)
+                fetchEvolutionChain(newId)
             }
         );
   
