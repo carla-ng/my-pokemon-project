@@ -3,7 +3,17 @@
         Pokédex
     </div>
 
-    <div id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+    <SearchBar :pokemonData="allPokemon" @search-result="setSearchResults"></SearchBar>
+
+    <div v-if="searchResults" id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+        <PokemonListElement
+            v-for="pokemon in searchResults"
+            :key="pokemon.id"
+            :pokemon="pokemon">
+        </PokemonListElement>
+    </div>
+
+    <div v-else id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
 
         <PokemonListElement
             v-for="pokemon in allPokemon"
@@ -11,7 +21,7 @@
             :pokemon="pokemon"
         ></PokemonListElement>
 
-        <!-- show a loading spinner while data is being fetched -->
+        <!-- show a loader while data is being fetched -->
         <div v-if="loading" class="my-8 mx-5 text-lg">
             Loading...
         </div>
@@ -21,20 +31,28 @@
 
 <script>
 import PokemonListElement from '@/components/PokemonListElement.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
 import { onBeforeUnmount, onMounted, reactive, toRefs } from 'vue';
 
 export default {
     name: 'PokemonList',
     components: {
-        PokemonListElement
+        PokemonListElement,
+        SearchBar
     },
     setup() {
         const state = reactive({
             allPokemon: [],
             offset: 0,
-            loading: false
+            loading: false,
+            searchResults: null,
         })
+
+
+        const setSearchResults = ( results ) => {
+            state.searchResults = results
+        }
 
 
         const loadPokemon = async () => {
@@ -94,7 +112,8 @@ export default {
         return {
             ...toRefs(state),
 
-            loadPokemon
+            loadPokemon,
+            setSearchResults,
         }
     }
 }

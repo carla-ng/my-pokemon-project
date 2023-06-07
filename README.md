@@ -24,12 +24,14 @@ https://carla-ng-my-pokemon-project.netlify.app/
 <br/>
 
 ## To Do List / Possible Future Features
-* Search bar
-* Berries info
-* Locations info
-* Generations info
-* Rename CSS classes
+* Improve SearchBar component (both styles and functionality)
+* Berries info section
+* Locations info section
+* Generations info section
+* Renaming of CSS classes
 * Optimize everything
+* Create more small components (ex. button/link)
+* Search by filters
 
 <br/>
 
