@@ -57,7 +57,7 @@
                             <td>{{ pokemon.weight }}kg</td>
                         </tr>
                         <tr>
-                            <td class="flex">Abilities</td>
+                            <td>Abilities</td>
                             <td>
                                 <span v-for="(ability, index) in pokemon.abilities" :key="ability.ability.name" class="custom-capitalize capitalize">
                                     <span v-if="index !== 0">,</span>

@@ -24,7 +24,6 @@ https://carla-ng-my-pokemon-project.netlify.app/
 <br/>
 
 ## To Do List / Possible Future Improvements and Features
-* Create items info section
 * Create locations info section (optional)
 * Create generations info section (optional)
 * Create more small components (ex. button/link)
@@ -34,6 +33,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Define global CSS variables
 * Optimize everything
 * Search by filters
+* Improve Items section
 * Improve way evolution info is shown
 
 <br/>

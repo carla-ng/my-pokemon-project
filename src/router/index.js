@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import PokemonList from '../views/PokemonList.vue'
 import PokemonProfile from '../views/PokemonProfile.vue'
 import ItemsList from '../views/ItemsList.vue'
+import ItemProfile from '../views/ItemProfile.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/items',
     name: 'ItemsList',
     component: ItemsList
+  },
+  {
+    path: '/item/:id',
+    name: 'ItemProfile',
+    component: ItemProfile
   },
 ]
 

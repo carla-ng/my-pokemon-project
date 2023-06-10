@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="item.sprites.default" class="item__list__element px-2 py-4 m-1.5 rounded-2xl cursor-pointer flex">
+    <router-link :to="`/item/${item.id}`" v-if="item.sprites.default" class="item__list__element px-2 py-4 m-1.5 rounded-2xl cursor-pointer flex">
 
         <div class="item__list__element-number text-white text-lg px-2">{{ formattedId }}</div>
 
@@ -8,7 +8,7 @@
 
         <div class="item__list__element-name text-lg capitalize font-semibold text-white truncate px-2">{{ item.name.replace('-', ' ') }}</div>
         
-    </div>
+    </router-link>
 
 </template>
   
