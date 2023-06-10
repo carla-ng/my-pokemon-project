@@ -1,12 +1,27 @@
 <template>
-    <div id="home" class="max-w-3xl ml-auto mr-auto">
+    <div id="home" class="p-3 max-w-3xl ml-auto mr-auto">
         <h1 class="poketitle">My Pokémon Project</h1>
         <p class="poketext mt-8 ml-auto mr-auto max-w-sm">Here you can find some categories to choose from to learn more about the world of Pokémon!</p>
 
         <ul class="categories mt-9 ml-auto mr-auto max-w-md">
-            <li class="categories__element brand-color-01-background" @click="$router.push({name: 'PokemonList'})">
-                <span class="categories__element__text">Pokédex</span>
-                <img class="categories__element__svg" :src="pokeballSVG" alt="Pokeball" />
+            <li class="categories__element overflow-hidden relative rounded-2xl cursor-pointer my-5 px-1.5 py-4" @click="$router.push({name: 'PokemonList'})">
+                <span class="categories__element__text text-white text-xl">Pokédex</span>
+                <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
+            </li>
+
+            <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
+                <span class="categories__element__text text-white text-xl">Items</span>
+                <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
+            </li>
+
+            <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
+                <span class="categories__element__text text-white text-xl">Locations</span>
+                <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
+            </li>
+
+            <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
+                <span class="categories__element__text text-white text-xl">Generations</span>
+                <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
         </ul>
     </div>
@@ -18,10 +33,7 @@
 
 export default {
     name: 'Home',
-    components: {
-        
-
-    },
+    components: {},
     setup() {
         return {
             pokeballSVG: require('@/assets/svg/pokeball.svg')
@@ -36,36 +48,33 @@ $breakpoint-max-mobile: 767px;
 $breakpoint-min-desktop: 768px;
 
 #home {
-    padding: 12px;
-
     .categories {
         .categories__element {
-            border-radius: 16px;
-            cursor: pointer;
-            overflow: hidden;
-            padding: 16px 6px;
-            position: relative;
-
-            .categories__element__text {
-                font-size: 1.25rem;
-                font-weight: 500;
-                line-height: 1.75rem;
-            }
+            &.coming_soon { opacity: 0.5; }
 
             .categories__element__svg {
-                height: auto;
-                left: -286px;
-                margin: 0;
-                max-width: none;
-                padding: 0;
-                position: absolute;
-                top: -310px;
                 width: 735px;
+                @media (max-width: $breakpoint-max-mobile) { width: 700px; }
+            }
+
+            &:nth-child(odd) {
+                background-color: #42b983;
                 
-                @media (max-width: $breakpoint-max-mobile) {
-                    left: -286px;
-                    top: -292px;
-                    width: 700px;
+                .categories__element__svg {
+                    left: -285px;
+                    top: -310px;
+                    @media (max-width: $breakpoint-max-mobile) { top: -290px; }
+                }
+            }
+
+            &:nth-child(even) {
+                background-color: #afafaf;
+                
+                .categories__element__svg {
+                    right: -320px;
+                    top: -300px;
+                    transform: rotate(40deg);
+                    @media (max-width: $breakpoint-max-mobile) { top: -280px; }
                 }
             }
         }

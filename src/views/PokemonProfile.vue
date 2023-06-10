@@ -45,6 +45,10 @@
                             <td class="capitalize">{{ pokemon.species.name }}</td>
                         </tr>
                         <tr>
+                            <td v-if="speciesInfo" class="flex">Info</td>
+                            <td>{{ speciesInfo }}</td>
+                        </tr>
+                        <tr>
                             <td>Height</td>
                             <td>{{ pokemon.height }}cm</td>
                         </tr>
@@ -53,7 +57,7 @@
                             <td>{{ pokemon.weight }}kg</td>
                         </tr>
                         <tr>
-                            <td>Abilities</td>
+                            <td class="flex">Abilities</td>
                             <td>
                                 <span v-for="(ability, index) in pokemon.abilities" :key="ability.ability.name" class="custom-capitalize capitalize">
                                     <span v-if="index !== 0">,</span>
@@ -219,10 +223,11 @@
         const loading = ref(false)       // loader while waiting to receive pokemon info
         const pokemon = ref({})          // where current pokemon info is stored
 
-        const activeTab = ref('about')  // sets the initial active tab
+        const activeTab = ref('about')   // sets the initial active tab
 
         let pokemonTypes = ref()
-        const evolutionChain  = ref([])      // current pokemon evolutions
+        const evolutionChain  = ref([])  // current pokemon evolutions
+        const speciesInfo = ref()        // pokemon species info
   
 
         // fetch individual pokemon info from pokeapi
@@ -277,14 +282,30 @@
         }
 
 
+        // fetch evolution chain
         const fetchEvolutionChain = async ( pokemonId ) => {
             try {
                 const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`)
                 const speciesData = await speciesResponse.json()
-                const evolutionChainUrl = speciesData.evolution_chain.url
 
+                // here we get species info to show in DOM
+                if ( speciesData.flavor_text_entries[0] ) {
+                    const flavorText = String(speciesData.flavor_text_entries[0].flavor_text)
+  
+                    // remove special characters that are returned from api
+                    const cleanedFlavorText = flavorText.replace(/\f/g, '\n')
+                                                        .replace(/\u00ad\n/g, '')
+                                                        .replace(/\u00ad/g, '')
+                                                        .replace(/ -\n/g, ' - ')
+                                                        .replace(/-\n/g, '-')
+                                                        .replace(/\n/g, ' ')
+
+                    speciesInfo.value = cleanedFlavorText
+                }
+
+                const evolutionChainUrl = speciesData.evolution_chain.url
                 const evolutionChainResponse = await fetch(evolutionChainUrl)
-                const evolutionChainData = await evolutionChainResponse.json()
+                const evolutionChainData = await evolutionChainResponse.json()                
 
                 const parsedEvolutionChain = parseEvolutionChain(evolutionChainData.chain)
                 evolutionChain.value = parsedEvolutionChain
@@ -293,6 +314,8 @@
             }
         };
 
+
+        // get evolution chain relevant info to show later in DOM
         const parseEvolutionChain = ( chain ) => {
             const evolutionsData = []
             const { species, evolves_to } = chain
@@ -370,6 +393,7 @@
             loading,
             pokemon,
             pokemonTypes,
+            speciesInfo,
         };
     },
   };

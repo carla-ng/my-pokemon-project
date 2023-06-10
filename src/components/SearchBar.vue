@@ -1,14 +1,17 @@
 <template>
 
-    <div id="searchbar">
-        <input type="text" v-model="searchTerm" placeholder="Enter a Pokémon name or ID" />
-        <button @click="search">Search</button>
+    <div id="searchbar" class="flex justify-center">
+        <input type="text" v-model="searchTerm" placeholder="Enter a Pokémon name or ID" class="h-10 p-3 rounded-l-xl border border-gray-400 focus:outline-none focus:border-8 focus:border-gray-800" />
+        
+        <button @click="search" :disabled="isSearchDisabled" class="h-10 px-3 rounded-r-xl text-white flex items-center bg-indigo-500 hover:bg-indigo-400">
+            <img class="h-4 w-auto" :src="searchSVG" alt="Search" />
+        </button>
     </div>
 
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
     name: 'SearchBar',
@@ -19,7 +22,12 @@ export default {
         },
     },
     setup(props, { emit }) {
-        const searchTerm = ref('');
+        const searchTerm = ref('')
+
+        // computed property to check if the search button should be disabled
+        const isSearchDisabled = computed(() => {
+            return searchTerm.value === ''
+        })
 
         // search for pokemon by name or ID
         const search = async () => {
@@ -34,13 +42,19 @@ export default {
                 emit('search-result', [data])
 
             } catch ( error ) {
-                console.log('Error:', error)
+                console.log(error)
+
+                // emit the empty search result to the parent component
+                emit('empty-result')
             }
         }
 
         return {
+            isSearchDisabled,
             searchTerm,
             search,
+
+            searchSVG: require('@/assets/svg/magnifying-glass.svg')
         }
     },
 };
@@ -50,13 +64,8 @@ export default {
 <style lang="scss" scoped>
     #searchbar {
         input {
-            border: 1px solid;
             width: 70%;
             @media (min-width: 992px) { width: 40%; }
-        }
-        button {
-            background: grey;
-            color: #fff;
         }
     }
 </style>
