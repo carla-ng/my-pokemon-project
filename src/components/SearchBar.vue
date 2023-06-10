@@ -32,7 +32,8 @@ export default {
         // search for pokemon by name or ID
         const search = async () => {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.value}`)
+                const term = (searchTerm.value).toLowerCase()
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`)
                 if ( !response.ok ) {
                     throw new Error(`Error: ${response.status} ${response.statusText}`)
                 }

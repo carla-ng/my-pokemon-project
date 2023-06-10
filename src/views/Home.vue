@@ -9,7 +9,7 @@
                 <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
 
-            <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
+            <li class="categories__element overflow-hidden relative rounded-2xl cursor-pointer my-5 px-1.5 py-4" @click="$router.push({name: 'ItemsList'})">
                 <span class="categories__element__text text-white text-xl">Items</span>
                 <img class="categories__element__svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>

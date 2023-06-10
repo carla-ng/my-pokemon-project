@@ -31,6 +31,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Add new fonts
 * Add animations and transitions
 * Renaming of CSS classes
+* Define global CSS variables
 * Optimize everything
 * Search by filters
 * Improve way evolution info is shown

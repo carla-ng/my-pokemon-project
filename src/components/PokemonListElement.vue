@@ -6,7 +6,7 @@
 
         <div class="pokemon-list-element-name text-lg capitalize font-semibold text-white truncate">{{ pokemon.name.replace('-', ' ') }}</div>
 
-        <div class="pokemon-list-element-number text-white">{{ formattedId  }}</div>
+        <div class="pokemon-list-element-number text-white">{{ formattedId }}</div>
 
         <div class="pokemon-list-element-types-container flex flex-row flex-wrap justify-center mt-1">
             <div v-for="type in pokemon.types" :key="type.type.name" class="pokemon-element-types text-white px-1.5 py-0.5 rounded-lg text-sm mx-1">

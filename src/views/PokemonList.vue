@@ -113,7 +113,7 @@ export default {
 
 
 
-        // Initial fetch for first pokemon
+        // initial fetch for first pokemon
         loadPokemon()
 
         
