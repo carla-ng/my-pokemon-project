@@ -27,7 +27,6 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Create locations info section (optional)
 * Create generations info section (optional)
 * Create more small components (ex. button/link)
-* Add new fonts
 * Add animations and transitions
 * Renaming of CSS classes
 * Define global CSS variables
@@ -35,6 +34,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Search by filters
 * Improve Items section
 * Improve way evolution info is shown
+* Fix texts in Japanese and special characters
 
 <br/>
 

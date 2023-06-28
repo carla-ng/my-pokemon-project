@@ -1,5 +1,6 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@900&display=swap');
+
 
 // VARIABLES
 $pokemon-type-color: (
@@ -39,4 +40,19 @@ $pokemon-type-color: (
 }
 .item-bg-color {
     background-color: rgb(94 234 212);
+}
+
+
+// FONTS
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 3px;
+}
+
+.font-semibold {
+    letter-spacing: 3px;
 }

@@ -1,7 +1,7 @@
 <template>
-    <div class="font-bold my-8 mx-5 text-xl">
+    <h1 class="font-bold my-8 mx-5 text-3xl">
         Pokédex
-    </div>
+    </h1>
 
     <SearchBar :pokemonData="allPokemon" @search-result="setSearchResults" @empty-result="setEmptyResults"></SearchBar>
 
