@@ -15,7 +15,7 @@
                     <div id="pokemon-name-and-types">
                         <h2 class="text-3xl text-white text-left capitalize font-semibold mx-1 text-ellipsis" v-if="pokemon.name">{{ pokemon.name.replace('-', ' ') }}</h2>
                         <div class="text-left mt-2 mx-1">
-                            <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon-element-types text-white px-2 py-1 rounded-lg text-sm mx-1">
+                            <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon__element-types text-white px-2 py-1 rounded-lg text-sm mx-1">
                                 {{ type.type.name }}
                             </span>
                         </div>
@@ -100,8 +100,8 @@
 
                 <!-- EVOLUTION -->
                 <div id="evolution" v-if="activeTab === 'evolution'" class="flex flex-column justify-center flex-wrap max-w-lg mx-auto my-0">
-                    <div v-for="(evolution, index) in evolutionChain " :key="evolution.id" class="evolution-element mx-6 my-4">
-                        <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'current-pokemon' : '']">
+                    <div v-for="(evolution, index) in evolutionChain " :key="evolution.id" class="evolution__element mx-6 my-4">
+                        <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'evolution__element-current-pokemon' : '']">
                             <img :src="evolution.image" :alt="evolution.name" class="mx-4">
 
                             <div>
@@ -458,7 +458,7 @@
             }
 
             #evolution {
-                .evolution-element {
+                .evolution__element {
                     
                     a {
                         flex-direction: column;
@@ -469,7 +469,8 @@
                             @media (min-width: 992px) { width: 20%; }
                         }
                     }
-                    & > .current-pokemon {
+                    & > .evolution__element-current-pokemon {
+                        cursor: auto;
                         opacity: 0.6;
                     }
                 }

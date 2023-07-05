@@ -28,7 +28,6 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Create generations info section (optional)
 * Create more small components (ex. button/link)
 * Add animations and transitions
-* Renaming of CSS classes
 * Define global CSS variables
 * Optimize everything
 * Search by filters

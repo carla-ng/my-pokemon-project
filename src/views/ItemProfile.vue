@@ -222,28 +222,6 @@
                     }
                 }
             }
-
-            #moves {
-                table tr td { padding: 6px 12px; }
-            }
-
-            #evolution {
-                .evolution-element {
-                    
-                    a {
-                        flex-direction: column;
-                        @media (min-width: 992px) { flex-direction: row; }
-
-                        img {
-                            width: 75%;
-                            @media (min-width: 992px) { width: 20%; }
-                        }
-                    }
-                    & > .current-item {
-                        opacity: 0.6;
-                    }
-                }
-            }
         }
     }
 

@@ -29,12 +29,17 @@ $pokemon-type-color: (
 @each $type, $color in $pokemon-type-color {
     .#{$type} {
         background-color: $color !important;
-        .pokemon-element-types { background-color: darken($color, 8%) !important; }
+        
+        .pokemon__element-types,
+        .pokemon-list-element__types {
+            background-color: darken($color, 8%) !important;
+        }
     }
 }
 
 // STYLES
-.pokemon-element-types {
+.pokemon__element-types,
+.pokemon-list-element__types {
     height: fit-content;
     width: fit-content;
 }

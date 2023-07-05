@@ -7,7 +7,7 @@
 
     <div v-if="emptySearch" class="p-7">No results found, please enter a correct pokémon name or ID.</div>
 
-    <div v-if="searchResults && !emptySearch" id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+    <div v-if="searchResults && !emptySearch" id="pokemon-list-search" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
         <PokemonListElement
             v-for="pokemon in searchResults"
             :key="pokemon.id"
@@ -15,7 +15,7 @@
         </PokemonListElement>
     </div>
 
-    <div v-else-if="!searchResults && !emptySearch" id="pokemon__list" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+    <div v-else-if="!searchResults && !emptySearch" id="pokemon-list-default" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
 
         <PokemonListElement
             v-for="pokemon in allPokemon"
