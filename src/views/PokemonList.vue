@@ -1,33 +1,43 @@
 <template>
-    <h1 class="font-bold my-8 mx-5 text-3xl">
-        Pokédex
-    </h1>
+    
+    <div id="pokedex-view">
+        
+        <h1 class="font-bold my-8 mx-5 text-3xl">
+            Pokédex
+        </h1>
 
-    <SearchBar :pokemonData="allPokemon" @search-result="setSearchResults" @empty-result="setEmptyResults"></SearchBar>
+        <SearchBar :pokemonData="allPokemon" @search-result="setSearchResults" @empty-result="setEmptyResults"></SearchBar>
 
-    <div v-if="emptySearch" class="p-7">No results found, please enter a correct pokémon name or ID.</div>
+        <div v-if="emptySearch" class="p-7">No results found, please enter a correct pokémon name or ID.</div>
 
-    <div v-if="searchResults && !emptySearch" id="pokemon-list-search" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
-        <PokemonListElement
-            v-for="pokemon in searchResults"
-            :key="pokemon.id"
-            :pokemon="pokemon">
-        </PokemonListElement>
-    </div>
-
-    <div v-else-if="!searchResults && !emptySearch" id="pokemon-list-default" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
-
-        <PokemonListElement
-            v-for="pokemon in allPokemon"
-            :key="pokemon.id"
-            :pokemon="pokemon"
-        ></PokemonListElement>
-
-        <!-- show a loader while data is being fetched -->
-        <div v-if="loading" class="my-8 mx-5 text-lg">
-            Loading...
+        <div v-if="searchResults && !emptySearch" id="pokemon-list-search" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+            <PokemonListElement
+                v-for="pokemon in searchResults"
+                :key="pokemon.id"
+                :pokemon="pokemon">
+            </PokemonListElement>
         </div>
+
+        <div v-else-if="!searchResults && !emptySearch" id="pokemon-list-default" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+
+            <PokemonListElement
+                v-for="pokemon in allPokemon"
+                :key="pokemon.id"
+                :pokemon="pokemon"
+            ></PokemonListElement>
+
+            <!-- show a loader while data is being fetched -->
+            <div v-if="loading" class="block my-8 mx-5 text-lg w-full">
+                <div class="loader">
+                    <span class="loader__element"></span>
+                    <span class="loader__element"></span>
+                    <span class="loader__element"></span>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </template>
 
 
@@ -131,4 +141,27 @@ export default {
 </script>
 
 
-<style lang="scss" scoped> </style>
+<style lang="scss" scoped>
+.loader {
+    overflow: hidden;
+    align-content: center; 
+    align-items: center;
+    display: flex;
+    justify-content: center;  
+    z-index: 100000;
+
+    .loader__element {
+        border-radius: 100%;
+        border: 3px solid #6366f1;
+        margin: 10px;
+
+        &:nth-child(1) { animation: preloader .6s ease-in-out alternate infinite; }
+        &:nth-child(2) { animation: preloader .6s ease-in-out alternate .2s infinite; }
+        &:nth-child(3) { animation: preloader .6s ease-in-out alternate .4s infinite; }
+    }
+}
+
+@keyframes preloader {
+  100% { transform: scale(2); }
+}
+</style>
