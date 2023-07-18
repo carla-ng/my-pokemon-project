@@ -10,7 +10,8 @@
 
         <div v-if="emptySearch" class="p-7">No results found, please enter a correct pokémon name or ID.</div>
 
-        <div v-if="searchResults && !emptySearch" id="pokemon-list-search" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+        <div v-if="searchResults && !emptySearch" id="pokemon-list-search" class="pokemon-list-container max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+            
             <PokemonListElement
                 v-for="pokemon in searchResults"
                 :key="pokemon.id"
@@ -18,18 +19,18 @@
             </PokemonListElement>
         </div>
 
-        <div v-else-if="!searchResults && !emptySearch" id="pokemon-list-default" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+        <div v-else-if="!searchResults && !emptySearch" id="pokemon-list-default" class="pokemon-list-container max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
 
             <PokemonListElement
                 v-for="pokemon in allPokemon"
                 :key="pokemon.id"
                 :pokemon="pokemon"
             ></PokemonListElement>
+        </div>
 
-            <!-- show a loader while data is being fetched -->
-            <div v-if="loading" class="block my-8 mx-5 text-lg w-full">
-                <Loader></Loader>
-            </div>
+         <!-- show a loader while data is being fetched -->
+         <div v-if="loading" class="block my-8 mx-5 text-lg w-full">
+            <Loader></Loader>
         </div>
 
     </div>
@@ -139,4 +140,13 @@ export default {
 </script>
 
 
-<style lang="scss" scoped> </style>
+<style lang="scss" scoped>
+.pokemon-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+    grid-gap: 5px;
+
+    @media (min-width: 576px) { grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); }
+    @media (min-width: 992px) { grid-template-columns: repeat(auto-fill, minmax(15%, 1fr)); }
+}
+</style>

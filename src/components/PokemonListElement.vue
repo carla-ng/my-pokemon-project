@@ -16,10 +16,10 @@
 
     </router-link>
 
-  </template>
+</template>
   
   
-  <script>
+<script>
   import { computed } from 'vue';
 
   export default {
@@ -47,15 +47,12 @@
         }
     }
   };
-  </script>
+</script>
   
 <style lang="scss" scoped>
 .pokemon-list-element {
-    width: 45%;
-    @media (min-width: 576px) { width: 30%; }
-    @media (min-width: 992px) { width: 15%; }
-
     background-color: #b9b7b7;
+    &:hover { opacity: 0.8; }
     .pokemon-list-element__types { background-color: darken(#b9b7b7, 8%); }
 }
 </style>

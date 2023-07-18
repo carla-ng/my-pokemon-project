@@ -93,12 +93,10 @@ export default {
         });
 
 
-
         // initial fetch for first items
         loadItems()
 
         
-
         return {
             ...toRefs(state),
         }

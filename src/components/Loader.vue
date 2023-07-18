@@ -25,11 +25,11 @@ export default {
 
 <style lang="scss" scoped>
 .loader {
-    overflow: hidden;
     align-content: center;
     align-items: center;
     display: flex;
     justify-content: center;
+    overflow: hidden;
     z-index: 100000;
 
     .loader__element {
@@ -37,21 +37,13 @@ export default {
         border: 3px solid; // Remove the hard-coded color value
         margin: 10px;
 
-        &:nth-child(1) {
-            animation: preloader 0.6s ease-in-out alternate infinite;
-        }
-        &:nth-child(2) {
-            animation: preloader 0.6s ease-in-out alternate 0.2s infinite;
-        }
-        &:nth-child(3) {
-            animation: preloader 0.6s ease-in-out alternate 0.4s infinite;
-        }
+        &:nth-child(1) { animation: preloader 0.6s ease-in-out alternate infinite; }
+        &:nth-child(2) { animation: preloader 0.6s ease-in-out alternate 0.2s infinite; }
+        &:nth-child(3) { animation: preloader 0.6s ease-in-out alternate 0.4s infinite; }
     }
 }
 
 @keyframes preloader {
-    100% {
-        transform: scale(2);
-    }
+    100% { transform: scale(2); }
 }
 </style>

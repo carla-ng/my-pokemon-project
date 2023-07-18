@@ -5,22 +5,22 @@
 
         <ul class="categories mt-9 ml-auto mr-auto max-w-md">
             <li class="categories__element overflow-hidden relative rounded-2xl cursor-pointer my-5 px-1.5 py-4" @click="$router.push({name: 'PokemonList'})">
-                <span class="categories__element-text text-white text-xl">Pokédex</span>
+                <span class="categories__element-text font-semibold text-white text-xl">Pokédex</span>
                 <img class="categories__element-svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
 
             <li class="categories__element overflow-hidden relative rounded-2xl cursor-pointer my-5 px-1.5 py-4" @click="$router.push({name: 'ItemsList'})">
-                <span class="categories__element-text text-white text-xl">Items</span>
+                <span class="categories__element-text font-semibold text-white text-xl">Items</span>
                 <img class="categories__element-svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
 
             <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
-                <span class="categories__element-text text-white text-xl">Locations</span>
+                <span class="categories__element-text font-semibold text-white text-xl">Locations</span>
                 <img class="categories__element-svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
 
             <li class="categories__element coming_soon overflow-hidden relative rounded-2xl my-5 px-1.5 py-4">
-                <span class="categories__element-text text-white text-xl">Generations</span>
+                <span class="categories__element-text font-semibold text-white text-xl">Generations</span>
                 <img class="categories__element-svg absolute m-0 h-auto max-w-none" :src="pokeballSVG" alt="Pokeball" />
             </li>
         </ul>
@@ -44,12 +44,14 @@ export default {
 
 
 <style lang="scss" scoped>
-$breakpoint-max-mobile: 767px;
-$breakpoint-min-desktop: 768px;
+@import '@/assets/styles/global.scss';
 
 #home {
     .categories {
         .categories__element {
+
+            &:hover { opacity: 0.8; }
+
             &.coming_soon {
                 display: none;
                 //opacity: 0.4;
@@ -61,7 +63,7 @@ $breakpoint-min-desktop: 768px;
             }
 
             &:nth-child(odd) {
-                background-color: #42b983;
+                background-color: $palette-color-01;
                 
                 .categories__element-svg {
                     left: -285px;
@@ -71,7 +73,7 @@ $breakpoint-min-desktop: 768px;
             }
 
             &:nth-child(even) {
-                background-color: #979797;
+                background-color: $palette-color-02;
                 
                 .categories__element-svg {
                     right: -320px;

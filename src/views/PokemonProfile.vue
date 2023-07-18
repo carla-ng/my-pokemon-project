@@ -211,10 +211,10 @@
         </div>
 
     </div>
-  </template>
+</template>
   
 
-  <script>
+<script>
   import Loader from '@/components/Loader.vue';
 
   import { ref, onBeforeUnmount, onMounted, watch } from 'vue';
@@ -408,89 +408,86 @@
         };
     },
   };
-  </script>
+</script>
   
 
-  <style lang="scss" scoped>
-    #pokemon-detail-view {
-        #pokemon-main-info {
-            img {
-                max-width: 90%;
-                @media (min-width: 576px) { width: 40%; }
-                @media (min-width: 992px) { max-width: 35%; }
+<style lang="scss" scoped>
+@import '@/assets/styles/global.scss';
+
+#pokemon-detail-view {
+    #pokemon-main-info {
+        img {
+            max-width: 90%;
+            @media (min-width: 576px) { width: 40%; }
+            @media (min-width: $breakpoint-min-desktop) { max-width: 35%; }
+        }
+    }
+
+    #pokemon-detailed-info {
+        margin-top: -60px;
+
+        ul {
+            li {
+                color: grey;
+                cursor: pointer;
+                letter-spacing: 1px;
+                &.active {
+                    color: #000;
+                    font-weight: bold;
+
+                    &::after {
+                        content: "";
+                        background-color: grey;
+                        display: block;
+                        height: 2px;
+                        margin-top: 4px;
+                    }
+
+                }
             }
         }
 
-        #pokemon-detailed-info {
-            margin-top: -60px;
-
-            ul {
-                li {
-                    color: grey;
-                    cursor: pointer;
+        table {
+            tr {
+                th {
                     letter-spacing: 1px;
-                    &.active {
-                        color: #000;
-                        font-weight: bold;
+                    padding: 3px 12px;
+                }
+                
+                td {
+                    padding: 2px 12px;
+                    text-align: left;
 
-                        &::after {
-                            content: "";
-                            background-color: grey;
-                            display: block;
-                            height: 2px;
-                            margin-top: 4px;
-                        }
+                    &.text-center { text-align: center !important; }
 
-                    }
+                    &:first-child { color: grey; }
                 }
             }
+        }
 
-            table {
-                tr {
-                    th {
-                        letter-spacing: 1px;
-                        padding: 3px 12px;
-                    }
-                    
-                    td {
-                        padding: 2px 12px;
-                        text-align: left;
+        #moves {
+            table tr td { padding: 6px 12px; }
+        }
 
-                        &.text-center { text-align: center !important; }
+        #evolution {
+            .evolution__element {
+                
+                a {
+                    flex-direction: column;
+                    @media (min-width: $breakpoint-min-desktop) { flex-direction: row; }
 
-                        &:first-child { color: grey; }
+                    img {
+                        width: 75%;
+                        @media (min-width: $breakpoint-min-desktop) { width: 20%; }
                     }
                 }
-            }
-
-            #moves {
-                table tr td { padding: 6px 12px; }
-            }
-
-            #evolution {
-                .evolution__element {
-                    
-                    a {
-                        flex-direction: column;
-                        @media (min-width: 992px) { flex-direction: row; }
-
-                        img {
-                            width: 75%;
-                            @media (min-width: 992px) { width: 20%; }
-                        }
-                    }
-                    & > .evolution__element-current-pokemon {
-                        cursor: auto;
-                        opacity: 0.6;
-                    }
+                & > .evolution__element-current-pokemon {
+                    cursor: auto;
+                    opacity: 0.6;
                 }
             }
         }
     }
-
-    .custom-capitalize {
-        text-transform: capitalize;
-        &:not(:first-word) { text-transform: lowercase; }
-    }
-  </style>
+}
+</style>
   

@@ -44,12 +44,16 @@
 </script>
   
 <style lang="scss" scoped>
+@import '@/assets/styles/global.scss';
+
 .item-list-element {
     width: 100%;
-    @media (min-width: 768px) { width: 30%; }
+    @media (min-width: $breakpoint-min-desktop) { width: 30%; }
 
-    &:nth-child(odd) { background-color: rgb(134 239 172); }
-    &:nth-child(even) { background-color: rgb(167 139 250); }
+    &:nth-child(odd) { background-color: $palette-color-03; }
+    &:nth-child(even) { background-color: $palette-color-04; }
+
+    &:hover { opacity: 0.8; }
 }
 </style>
   

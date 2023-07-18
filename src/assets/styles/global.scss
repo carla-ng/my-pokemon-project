@@ -24,6 +24,14 @@ $pokemon-type-color: (
     normal: #b9b7b7,
 );
 
+$palette-color-01: #8bacf6;  //water
+$palette-color-02: #ffa761;  //fire
+$palette-color-03: #62d5b4;  //grass
+$palette-color-04: #d296ed;  //poison
+
+$breakpoint-max-mobile: 767px;
+$breakpoint-min-desktop: 768px;
+
 
 // TYPES
 @each $type, $color in $pokemon-type-color {
@@ -43,8 +51,14 @@ $pokemon-type-color: (
     height: fit-content;
     width: fit-content;
 }
+
 .item-bg-color {
     background-color: rgb(94 234 212);
+}
+
+.custom-capitalize {
+    text-transform: capitalize;
+    &:not(:first-word) { text-transform: lowercase; }
 }
 
 
@@ -63,7 +77,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Define the keyframes for the fade-in animation */
+// TRANSITIONS AND ANIMATIONS
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -73,7 +87,6 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Apply the fade-in animation to the element */
 .fade-in-element {
     animation-name: fadeIn;
     animation-duration: 1.5s;

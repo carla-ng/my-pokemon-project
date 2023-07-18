@@ -10,6 +10,7 @@
 
 </template>
 
+
 <script>
 import { computed, ref } from 'vue';
 
@@ -63,10 +64,12 @@ export default {
 
 
 <style lang="scss" scoped>
-    #searchbar {
-        input {
-            width: 70%;
-            @media (min-width: 992px) { width: 40%; }
-        }
+@import '@/assets/styles/global.scss';
+
+#searchbar {
+    input {
+        width: 70%;
+        @media (min-width: $breakpoint-min-desktop) { width: 40%; }
     }
+}
 </style>

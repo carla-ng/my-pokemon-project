@@ -180,64 +180,58 @@
   
 
 <style lang="scss" scoped>
+@import '@/assets/styles/global.scss';
 
-    #item-detail-view {
+#item-detail-view {
 
-        #item-detailed-info {
-            img {
-                max-width: 20%;
-                width: 20%;
-                @media (min-width: 768px) {
-                    max-width: 7%;
-                    width: 7%;
+    #item-detailed-info {
+        img {
+            max-width: 20%;
+            width: 20%;
+            @media (min-width: $breakpoint-min-desktop) {
+                max-width: 7%;
+                width: 7%;
+            }
+        }
+
+        ul {
+            li {
+                color: grey;
+                cursor: pointer;
+                &.active {
+                    color: #000;
+                    font-weight: bold;
+
+                    &::after {
+                        content: "";
+                        background-color: grey;
+                        display: block;
+                        height: 2px;
+                        margin-top: 4px;
+                    }
+
                 }
             }
+        }
 
-            ul {
-                li {
-                    color: grey;
-                    cursor: pointer;
-                    &.active {
-                        color: #000;
-                        font-weight: bold;
+        table {
+            tr {
+                th { padding: 3px 12px; }
+                
+                td {
+                    padding: 2px 12px;
+                    text-align: left;
 
-                        &::after {
-                            content: "";
-                            background-color: grey;
-                            display: block;
-                            height: 2px;
-                            margin-top: 4px;
-                        }
+                    &.text-center { text-align: center !important; }
 
-                    }
-                }
-            }
-
-            table {
-                tr {
-                    th {
-                        padding: 3px 12px;
-                    }
-                    
-                    td {
-                        padding: 2px 12px;
-                        text-align: left;
-
-                        &.text-center { text-align: center !important; }
-
-                        &:first-child {
-                            color: grey;
-                            min-width: 120px;
-                        }
+                    &:first-child {
+                        color: grey;
+                        min-width: 120px;
                     }
                 }
             }
         }
     }
-
-    .custom-capitalize {
-        text-transform: capitalize;
-        &:not(:first-word) { text-transform: lowercase; }
-    }
-  </style>
+}
+</style>
   
