@@ -216,6 +216,7 @@
                 td {
                     padding: 2px 12px;
                     text-align: left;
+                    vertical-align: top;
 
                     &.text-center { text-align: center !important; }
 
