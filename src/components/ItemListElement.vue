@@ -1,6 +1,6 @@
 <template>
 
-    <router-link :to="`/item/${item.id}`" v-if="item.sprites.default" class="item-list-element px-2 py-4 m-1.5 rounded-2xl cursor-pointer flex">
+    <router-link :to="`/item/${item.id}`" v-if="item.sprites.default" class="fade-in-element item-list-element px-2 py-4 m-1.5 rounded-2xl cursor-pointer flex">
 
         <div class="item-list-element__number text-white text-lg px-2">{{ formattedId }}</div>
 

@@ -1,5 +1,5 @@
 <template>
-    <div id="home" class="p-3 max-w-3xl ml-auto mr-auto">
+    <div id="home" class="fade-in-element p-3 max-w-3xl ml-auto mr-auto">
         <h1 class="poketitle">My Pokémon Project</h1>
         <p class="poketext mt-8 ml-auto mr-auto max-w-sm">Here you can find some categories to choose from to learn more about the world of Pokémon!</p>
 
@@ -50,7 +50,10 @@ $breakpoint-min-desktop: 768px;
 #home {
     .categories {
         .categories__element {
-            &.coming_soon { opacity: 0.4; }
+            &.coming_soon {
+                display: none;
+                //opacity: 0.4;
+            }
 
             .categories__element-svg {
                 width: 735px;

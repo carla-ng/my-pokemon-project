@@ -1,31 +1,35 @@
 <template>
-    <div class="font-bold my-8 mx-5 text-xl">
-        Items
-    </div>
-
-    <div id="items-list-page" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
-        <ItemListElement
-            v-for="item in allItems"
-            :key="item.id"
-            :item="item"
-        ></ItemListElement>
-
-        <!-- show a loader while data is being fetched -->
-        <div v-if="loading" class="my-8 mx-5 text-lg">
-            Loading...
+    <div id="items-list-view" class="fade-in-element">
+        <div class="font-bold my-8 mx-5 text-xl">
+            Items
         </div>
-    </div>
+
+        <div id="items-list-page" class="max-w-7xl ml-auto mr-auto my-8 mx-5 flex flex-wrap justify-center">
+            <ItemListElement
+                v-for="item in allItems"
+                :key="item.id"
+                :item="item"
+            ></ItemListElement>
+
+            <!-- show a loader while data is being fetched -->
+            <div v-if="loading" class="block my-8 mx-5 text-lg w-full">
+                <Loader></Loader>
+            </div>
+        </div>
+    </div> 
 </template>
 
 
 <script>
 import ItemListElement from '@/components/ItemListElement.vue';
+import Loader from '@/components/Loader.vue';
 
-import { onBeforeUnmount, onMounted, reactive, ref, toRefs } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, toRefs } from 'vue';
 
 export default {
     name: 'ItemsList',
     components: {
+        Loader,
         ItemListElement
     },
     setup() {

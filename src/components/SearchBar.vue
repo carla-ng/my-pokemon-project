@@ -58,7 +58,7 @@ export default {
             searchSVG: require('@/assets/svg/magnifying-glass.svg')
         }
     },
-};
+}
 </script>
 
 

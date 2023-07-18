@@ -1,12 +1,15 @@
 <template>
 
-    <div id="pokemon-detail-view" class="mx-3">
+    <div id="pokemon-detail-view" class="fade-in-element mx-3">
 
-        <div @click="$router.push({name: 'PokemonList'})" class="max-w-4xl ml-auto mr-auto mb-5 text-white text-md text-left cursor-pointer">
-            Go back
+        <div @click="$router.push({name: 'PokemonList'})" class="max-w-4xl ml-auto mr-auto mb-8 text-left cursor-pointer">
+            <img class="inline-block h-3 w-auto" :src="backArrowSVG" alt="Back arrow" />
+            <span class="inline-block ml-2 text-white text-md">Go back</span>
         </div>
 
-        <div v-if="loading">Loading...</div>
+        <div v-if="loading" class="block my-8 mx-5 text-lg w-full">
+            <Loader color="#fff"></Loader>
+        </div>
 
         <div v-else class="max-w-4xl ml-auto mr-auto pb-10">
 
@@ -38,7 +41,7 @@
                 </ul>
 
                 <!-- ABOUT -->
-                <div id="about" v-if="activeTab === 'about'">
+                <div id="about" v-if="activeTab === 'about'" class="fade-in-element-fast">
                     <table>
                         <tr v-if="pokemon.species">
                             <td>Species</td>
@@ -69,7 +72,7 @@
                 </div>
 
                 <!-- BASE STATS -->
-                <div id="base-stats" v-if="activeTab === 'base-stats'">
+                <div id="base-stats" v-if="activeTab === 'base-stats'" class="fade-in-element-fast">
                     <table>
                         <tr>
                             <td>HP</td>
@@ -99,7 +102,7 @@
                 </div>
 
                 <!-- EVOLUTION -->
-                <div id="evolution" v-if="activeTab === 'evolution'" class="flex flex-column justify-center flex-wrap max-w-lg mx-auto my-0">
+                <div id="evolution" v-if="activeTab === 'evolution'" class="fade-in-element-fast flex flex-column justify-center flex-wrap max-w-lg mx-auto my-0">
                     <div v-for="(evolution, index) in evolutionChain " :key="evolution.id" class="evolution__element mx-6 my-4">
                         <router-link :to="`/pokemon/${evolution.id}`" class="flex flex-nowrap items-center" :class="[pokemon.originalPokemonId == evolution.id ? 'evolution__element-current-pokemon' : '']">
                             <img :src="evolution.image" :alt="evolution.name" class="mx-4">
@@ -190,7 +193,7 @@
                 </div>
 
                 <!-- MOVES -->
-                <div id="moves" v-if="activeTab === 'moves'">
+                <div id="moves" v-if="activeTab === 'moves'" class="fade-in-element-fast">
                     <table>
                         <tr class="text-left">
                             <th>Move</th>
@@ -212,11 +215,16 @@
   
 
   <script>
+  import Loader from '@/components/Loader.vue';
+
   import { ref, onBeforeUnmount, onMounted, watch } from 'vue';
   import { useRoute } from 'vue-router';
   
   export default {
     name: 'PokemonProfile',
+    components: {
+        Loader
+    },
     setup() {
         const route = useRoute()          // needed to get current pokemon id
 
@@ -395,6 +403,8 @@
             pokemon,
             pokemonTypes,
             speciesInfo,
+
+            backArrowSVG: require('@/assets/svg/back-arrow.svg')
         };
     },
   };

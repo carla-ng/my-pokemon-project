@@ -24,16 +24,14 @@ https://carla-ng-my-pokemon-project.netlify.app/
 <br/>
 
 ## To Do List / Possible Future Improvements and Features
-* Create locations info section (optional)
-* Create generations info section (optional)
-* Create more small components (ex. button/link)
-* Add animations and transitions
 * Define global CSS variables
 * Optimize everything
 * Search by filters
 * Improve Items section
 * Improve way evolution info is shown
 * Fix texts in Japanese and special characters
+* Create locations info section (optional)
+* Create generations info section (optional)
 
 <br/>
 

@@ -1,6 +1,6 @@
 <template>
 
-    <router-link :to="`/pokemon/${pokemon.id}`" v-if="pokemon.sprites.other['official-artwork'].front_default" class="pokemon-list-element p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
+    <router-link :to="`/pokemon/${pokemon.id}`" v-if="pokemon.sprites.other['official-artwork'].front_default" class="pokemon-list-element fade-in-element-fast p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
 
         <img class="pokemon-list-element__image mx-auto block" :src="pokemon.sprites.other['official-artwork'].front_default" :alt="'Image of ' + pokemon.name"/>
 
@@ -49,8 +49,8 @@
   };
   </script>
   
-  <style lang="scss" scoped>
-  .pokemon-list-element {
+<style lang="scss" scoped>
+.pokemon-list-element {
     width: 45%;
     @media (min-width: 576px) { width: 30%; }
     @media (min-width: 992px) { width: 15%; }
