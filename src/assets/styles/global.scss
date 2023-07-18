@@ -53,12 +53,12 @@ $breakpoint-min-desktop: 768px;
 }
 
 .item-bg-color {
-    background-color: rgb(94 234 212);
+    background-color: $palette-color-03;
 }
 
 .custom-capitalize {
-    text-transform: capitalize;
-    &:not(:first-word) { text-transform: lowercase; }
+    text-transform: lowercase;
+    &::first-letter { text-transform: uppercase; }
 }
 
 

@@ -62,7 +62,7 @@
                         <tr>
                             <td>Abilities</td>
                             <td>
-                                <span v-for="(ability, index) in pokemon.abilities" :key="ability.ability.name" class="custom-capitalize capitalize">
+                                <span v-for="(ability, index) in pokemon.abilities" :key="ability.ability.name" class="capitalize">
                                     <span v-if="index !== 0">,</span>
                                     {{ ability.ability.name.replace('-', ' ') }}
                                 </span>

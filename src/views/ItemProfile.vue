@@ -38,16 +38,16 @@
                     <table>
                         <tr v-if="item.flavor_text_entries">
                             <td>Information</td>
-                            <td>{{ item.flavor_text_entries[0].text }}</td>
+                            <td>{{ getFlavorText(item.flavor_text_entries) }}</td>
                         </tr>
                         <tr v-if="item.category">
                             <td>Category</td>
-                            <td class="custom-captialize">{{ item.category.name.replace('-', ' ') }}</td>
+                            <td class="custom-capitalize">{{ item.category.name.replace('-', ' ') }}</td>
                         </tr>
                         <tr v-if="item.attributes && item.attributes[0]">
                             <td class="flex">Attributes</td>
                             <td>
-                                <span v-for="(attribute, index) in item.attributes" :key="attribute.name" class="custom-capitalize capitalize">
+                                <span v-for="(attribute, index) in item.attributes" :key="attribute.name" class="capitalize">
                                     <span v-if="index !== 0">,</span>
                                     {{ attribute.name.replace('-', ' ') }}
                                 </span>
@@ -55,12 +55,7 @@
                         </tr>
                         <tr>
                             <td>Cost</td>
-                            <td>{{ item.cost }}</td>
-                        </tr>
-
-                        <tr v-if="item.fling_effect">
-                            <td>Fling Effect</td>
-                            <td>{{ item.fling_effect }}</td>
+                            <td>{{ item.cost }} ₽</td>
                         </tr>
 
                         <tr v-if="item.fling_power">
@@ -83,16 +78,7 @@
 
                 <!-- EFFECTS -->
                 <div id="effects" v-if="activeTab === 'effects'" class="fade-in-element-fast">
-                    <table>
-                        <tr>
-                            <td class="flex">Effect</td>
-                            <td class="custom-capitalize">{{ item.effect_entries[0].effect }}</td>
-                        </tr>
-                        <tr>
-                            <td>Short Effect</td>
-                            <td class="flex">{{ item.effect_entries[0].short_effect }}</td>
-                        </tr>
-                    </table>
+                    <p class="text-left mx-8 my-1">{{ item.effect_entries[0].effect }}</p>
                 </div>
 
             </div>
@@ -142,6 +128,14 @@
             }
         }
 
+        // get the "text" from the first element with "en" as "language" value
+        const getFlavorText = ( flavorTextEntries ) => {
+            const entry = flavorTextEntries.find((entry) => entry.language.name === 'en')
+
+            //return the text if found, otherwise an empty string
+            return entry ? entry.text : ''
+        };
+
 
         // watch for changes in route params
         watch(
@@ -169,8 +163,9 @@
 
         return {
             activeTab,
-            loading,
+            getFlavorText,
             item,
+            loading,
 
             backArrowSVG: require('@/assets/svg/back-arrow.svg')
         };

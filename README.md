@@ -24,10 +24,11 @@ https://carla-ng-my-pokemon-project.netlify.app/
 <br/>
 
 ## To Do List / Possible Future Improvements and Features
-* Optimize everything
+* Optimize
 * Search by filters
 * Improve Items section
 * Improve way evolution info is shown
+* Add button to scroll to top of page
 * Fix texts in Japanese and special characters
 
 <br/>
