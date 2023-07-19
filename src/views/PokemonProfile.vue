@@ -296,19 +296,22 @@
                 const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`)
                 const speciesData = await speciesResponse.json()
 
-                // here we get species info to show in DOM
-                if ( speciesData.flavor_text_entries[0] ) {
-                    const flavorText = String(speciesData.flavor_text_entries[0].flavor_text)
-  
-                    // remove special characters that are returned from api
-                    const cleanedFlavorText = flavorText.replace(/\f/g, '\n')
-                                                        .replace(/\u00ad\n/g, '')
-                                                        .replace(/\u00ad/g, '')
-                                                        .replace(/ -\n/g, ' - ')
-                                                        .replace(/-\n/g, '-')
-                                                        .replace(/\n/g, ' ')
+                // find the flavor_text entry with "en" as the "language"
+                const enFlavorTextEntry = speciesData.flavor_text_entries.find((entry) => entry.language.name === 'en');
 
-                    speciesInfo.value = cleanedFlavorText
+                if ( enFlavorTextEntry ) {
+                    const flavorText = String(enFlavorTextEntry.flavor_text);
+
+                    // remove special characters that are returned from the API
+                    const cleanedFlavorText = flavorText
+                        .replace(/\f/g, '\n')
+                        .replace(/\u00ad\n/g, '')
+                        .replace(/\u00ad/g, '')
+                        .replace(/ -\n/g, ' - ')
+                        .replace(/-\n/g, '-')
+                        .replace(/\n/g, ' ');
+
+                    speciesInfo.value = cleanedFlavorText;
                 }
 
                 const evolutionChainUrl = speciesData.evolution_chain.url
@@ -483,7 +486,7 @@
                 }
                 & > .evolution__element-current-pokemon {
                     cursor: auto;
-                    opacity: 0.6;
+                    opacity: 0.5;
                 }
             }
         }

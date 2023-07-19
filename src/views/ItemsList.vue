@@ -16,6 +16,8 @@
                 <Loader></Loader>
             </div>
         </div>
+
+        <ScrollToTopButton></ScrollToTopButton>
     </div> 
 </template>
 
@@ -23,6 +25,7 @@
 <script>
 import ItemListElement from '@/components/ItemListElement.vue';
 import Loader from '@/components/Loader.vue';
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
 
 import { onBeforeUnmount, onMounted, reactive, toRefs } from 'vue';
 
@@ -30,7 +33,8 @@ export default {
     name: 'ItemsList',
     components: {
         Loader,
-        ItemListElement
+        ItemListElement,
+        ScrollToTopButton
     },
     setup() {
         const state = reactive({

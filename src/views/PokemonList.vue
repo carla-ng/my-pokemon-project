@@ -33,6 +33,8 @@
             <Loader></Loader>
         </div>
 
+        <ScrollToTopButton></ScrollToTopButton>
+
     </div>
 
 </template>
@@ -41,6 +43,7 @@
 <script>
 import Loader from '@/components/Loader.vue';
 import PokemonListElement from '@/components/PokemonListElement.vue';
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
 import SearchBar from '@/components/SearchBar.vue';
 
 import { onBeforeUnmount, onMounted, reactive, ref, toRefs } from 'vue';
@@ -50,6 +53,7 @@ export default {
     components: {
         Loader,
         PokemonListElement,
+        ScrollToTopButton,
         SearchBar
     },
     setup() {

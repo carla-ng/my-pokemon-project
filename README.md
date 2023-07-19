@@ -28,8 +28,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Search by filters
 * Improve Items section
 * Improve way evolution info is shown
-* Add button to scroll to top of page
-* Fix texts in Japanese and special characters
+* Check if all texts received from the API are in English and that they don't include special characters
 
 <br/>
 
