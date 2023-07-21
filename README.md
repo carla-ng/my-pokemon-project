@@ -24,11 +24,12 @@ https://carla-ng-my-pokemon-project.netlify.app/
 <br/>
 
 ## To Do List / Possible Future Improvements and Features
-* Optimize
-* Search by filters
+* Optimize loading times
+* Add search by filters
+* Improve SearchBar functionality 
 * Improve Items section
 * Improve way evolution info is shown
-* Check if all texts received from the API are in English and that they don't include special characters
+* Check if all texts received from the API are in English and verify they don't include special characters
 
 <br/>
 
