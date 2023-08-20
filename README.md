@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="https://github.com/carla-ng/my-pokemon-project/blob/master/src/assets/readme_image_1.jpg?raw=true" alt="Pokemon Project">
+</p>
+
+<br/>
+
 # My Pokémon Project
 Vue app with information about the world of Pokémon.
 
