@@ -236,6 +236,9 @@
         let pokemonTypes = ref()
         const evolutionChain  = ref([])  // current pokemon evolutions
         const speciesInfo = ref()        // pokemon species info
+
+        let evolutionDataCache = null    // evolution info cache
+        let movesFetched = false         // check if moves info has been already obtained
   
 
         // fetch individual pokemon info from pokeapi
@@ -277,7 +280,7 @@
                     return levelA - levelB
                 })
                 for ( const move of data.moves ) {
-                    move.move.info = await fetchMovesInfo(move.move.url)
+                    move.move.info = ''  // move info initialized
                 }
         
                 // pokemon object
@@ -291,7 +294,7 @@
 
 
         // fetch evolution chain
-        const fetchEvolutionChain = async ( pokemonId ) => {
+        const fetchEvolutionInfo = async ( pokemonId ) => {
             try {
                 const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`)
                 const speciesData = await speciesResponse.json()
@@ -320,8 +323,10 @@
 
                 const parsedEvolutionChain = parseEvolutionChain(evolutionChainData.chain)
                 evolutionChain.value = parsedEvolutionChain
+
+                return parsedEvolutionChain
             } catch ( error ) {
-                console.error(error)
+                console.error('Error fetching evolution info:', error)
             }
         }
 
@@ -363,14 +368,41 @@
                 if ( data.effect_entries.length ) {
                     moveInfo = data.effect_entries[0].short_effect
                     moveInfo = moveInfo.replace(/\$.*?%/g, '')
+                } else {
+                    return 'No move information available'
                 }
                 
             } catch (error) {
                 console.error(error)
+                return 'Error fetching move information'
             }
 
             return moveInfo
         }
+
+        const fetchMovesInfoForMoves = async () => {
+            try {
+                const movesWithInfo = await Promise.all(
+                    pokemon.value.moves.map(async (move) => {
+                        const info = await fetchMovesInfo(move.move.url);
+                        return {
+                            ...move,
+                            move: {
+                                ...move.move,
+                                info: info,
+                            },
+                        }
+                    })
+                )
+
+                movesFetched = true
+                pokemon.value.moves = movesWithInfo
+
+            } catch ( error ) {
+                console.error('Error fetching move info for moves:', error)
+            }
+        }
+
   
 
         // watch for changes in route params
@@ -379,19 +411,28 @@
             ( newId, oldId ) => {
                 if ( newId !== undefined && newId !== oldId ) {
                     fetchPokemon(newId)
-                    fetchEvolutionChain(newId)
                 }
             }
         )
+
+        // fetch additional data when tab changes
+        watch( activeTab, async( newTab ) => {
+            if ( newTab === 'evolution' ) {
+                if ( !evolutionDataCache ) {
+                    evolutionDataCache = await fetchEvolutionInfo(route.params.id)
+                }
+            } else if ( newTab === 'moves' ) {
+                if ( !movesFetched ) {
+                    fetchMovesInfoForMoves()
+                }
+            }
+        })
   
 
         // fetch information on component mount
         onMounted(() => {
             // fetch pokemon data
             fetchPokemon(route.params.id)
-
-            // fetch pokemon evolutions
-            fetchEvolutionChain(route.params.id)
         })
 
 
@@ -403,7 +444,7 @@
 
         return {
             activeTab,
-            evolutionChain ,
+            evolutionChain,
             loading,
             pokemon,
             pokemonTypes,
