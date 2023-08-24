@@ -323,7 +323,7 @@
             } catch ( error ) {
                 console.error(error)
             }
-        };
+        }
 
 
         // get evolution chain relevant info to show later in DOM
@@ -346,7 +346,7 @@
             }
 
             return evolutionsData
-        };
+        }
         
 
         // fetch pokemon moves info
@@ -376,11 +376,13 @@
         // watch for changes in route params
         watch(
             () => route.params.id,
-            ( newId ) => {
-                fetchPokemon(newId)
-                fetchEvolutionChain(newId)
+            ( newId, oldId ) => {
+                if ( newId !== undefined && newId !== oldId ) {
+                    fetchPokemon(newId)
+                    fetchEvolutionChain(newId)
+                }
             }
-        );
+        )
   
 
         // fetch information on component mount
@@ -408,7 +410,7 @@
             speciesInfo,
 
             backArrowSVG: require('@/assets/svg/back-arrow.svg')
-        };
+        }
     },
   };
 </script>
