@@ -18,6 +18,10 @@ https://carla-ng-my-pokemon-project.netlify.app/
 
 <br/>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/eb71acb3-f553-490f-9280-e1471ee803fd/deploy-status)](https://app.netlify.com/sites/carla-ng-my-pokemon-project/deploys)
+
+<br/>
+
 ## :hammer_and_pick: Built With
 * Vue
 * JavaScript
