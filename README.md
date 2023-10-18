@@ -35,6 +35,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 
 ## To Do List / Possible Future Improvements and Features
 * Optimize loading times _(in progress)_
+* Semantic HTML
 * Add search by filters
 * Improve SearchBar functionality 
 * Improve Items section
