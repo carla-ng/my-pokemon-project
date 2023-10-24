@@ -1,26 +1,26 @@
 <p align="center">
-  <img src="https://github.com/carla-ng/my-pokemon-project/blob/master/src/assets/readme_image_1.jpg?raw=true" alt="Pokemon Project">
+  <img src="https://github.com/carla-ng/my-pokemon-project/blob/master/src/assets/readme_image_1.jpg?raw=true" alt="Pokemon Project preview">
 </p>
 
-<br/>
+<br>
 
 # My Pokémon Project
 Vue app with information about the world of Pokémon.
 
-<br/>
+<br>
 
 ![status badge](https://img.shields.io/badge/status-in%20progress-yellow)
 
-<br/>
+<br>
 
 ## :globe_with_meridians: Demo
-https://carla-ng-my-pokemon-project.netlify.app/
+[https://carla-ng-my-pokemon-project.netlify.app/](https://carla-ng-my-pokemon-project.netlify.app/)
 
-<br/>
+<br>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/eb71acb3-f553-490f-9280-e1471ee803fd/deploy-status)](https://app.netlify.com/sites/carla-ng-my-pokemon-project/deploys)
 
-<br/>
+<br><br>
 
 ## :hammer_and_pick: Built With
 * Vue
@@ -29,9 +29,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * TailwindCSS
 * [PokéApi](https://pokeapi.co/)
 
-<br/>
-
-<br/>
+<br><br>
 
 ## To Do List / Possible Future Improvements and Features
 * Optimize loading times _(in progress)_
@@ -42,7 +40,7 @@ https://carla-ng-my-pokemon-project.netlify.app/
 * Improve way evolution info is shown
 * Check if all texts received from the API are in English and verify they don't include special characters _(in progress)_
 
-<br/>
+<br>
 
 ## Project setup
 ```
@@ -60,9 +58,9 @@ npm run build
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://cli.vuejs.org/config/)
 
-<br/>
+<br>
 
 ## :clap: Acknowledgments
 * Icons: https://freesvg.org/poke , [Nikita Golubev](https://www.flaticon.com/free-icons/pokemon)
