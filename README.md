@@ -60,7 +60,7 @@ npm run build
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/)
 
-<br>
+<br><br>
 
 ## :clap: Acknowledgments
 * Icons: https://freesvg.org/poke , [Nikita Golubev](https://www.flaticon.com/free-icons/pokemon)
