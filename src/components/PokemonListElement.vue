@@ -1,6 +1,6 @@
 <template>
 
-    <router-link :to="`/pokemon/${pokemon.id}`" v-if="pokemon.sprites.other['official-artwork'].front_default" class="pokemon-list-element fade-in-element-fast p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
+    <router-link :to="`/pokemon/${pokemon.id}`" v-if="typeof pokemon === 'object' && pokemon.sprites.other['official-artwork'].front_default" class="pokemon-list-element fade-in-element-fast p-1.5 m-1.5 rounded-2xl cursor-pointer" :class="pokemon.types.map(type => type.type.name).join(' ')">
 
         <img class="pokemon-list-element__image mx-auto block" :src="pokemon.sprites.other['official-artwork'].front_default" :alt="'Image of ' + pokemon.name"/>
 
@@ -34,6 +34,9 @@
 
         // add zeroes to pokemon id if it is less than 100
         const formattedId = computed(() => {
+            //console.log('props.pokemon')
+            //console.log(props.pokemon)
+
             const pokemonId = props.pokemon.id
             if ( pokemonId < 100 ) {
                 return pokemonId.toString().padStart(3, '0')

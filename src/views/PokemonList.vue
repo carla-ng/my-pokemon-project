@@ -6,7 +6,7 @@
             Pokédex
         </h1>
 
-        <SearchBar :pokemonData="allPokemon" @search-result="setSearchResults" @empty-result="setEmptyResults"></SearchBar>
+        <SearchBar @search-result="setSearchResults" @empty-result="setEmptyResults"></SearchBar>
 
         <div v-if="emptySearch" class="p-7">No results found, please enter a correct pokémon name or ID.</div>
 
@@ -46,7 +46,7 @@ import PokemonListElement from '@/components/PokemonListElement.vue';
 import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
 import SearchBar from '@/components/SearchBar.vue';
 
-import { onBeforeUnmount, onMounted, reactive, ref, toRefs } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref, toRefs, watch } from 'vue';
 
 export default {
     name: 'PokemonList',
@@ -62,14 +62,17 @@ export default {
             offset: 0,
             loading: false,
             searchResults: null,
+            searchTerm: '',
         })
         
 
         // pokemon search with SearchBar
         const emptySearch = ref(false)
+        
         const setSearchResults = ( results ) => {
             state.searchResults = results
             emptySearch.value = false
+            searchForPokemon(results)
         }
         const setEmptyResults = () => {
             emptySearch.value = true
@@ -79,7 +82,7 @@ export default {
         const loadPokemon = async () => {
             state.loading = true
 
-            fetch(`https://pokeapi.co/api/v2/pokemon?limit=40&offset=${state.offset}`)
+            fetch(`https://pokeapi.co/api/v2/pokemon?limit=42&offset=${state.offset}`)
                 .then( response => response.json() )
                 .then(data => {
                     const promises = data.results.map(pokemon => {
@@ -92,12 +95,39 @@ export default {
 
                     Promise.all(promises).then(() => {
                         state.allPokemon.sort((a, b) => a.id - b.id)
-                        state.offset += 40
+                        state.offset += 42
                         state.loading = false
                         emptySearch.value = false
                     })
+
+                    // trigger the search again with the updated data if a search term is set
+                    if ( state.searchTerm ) {
+                        searchForPokemon(state.searchTerm)
+                    }
             })
         }
+
+        // search for Pokemon based on the search term
+        const searchForPokemon = ( term ) => {
+            const searchTerm = term.toLowerCase()
+
+            console.log('button pressed')
+
+            // use filter to find Pokemon matching the searchTerm
+            state.searchResults = state.allPokemon.filter(( pokemon ) => {
+                const name = pokemon.name.toLowerCase()
+                const id = pokemon.id.toString()
+                return name.includes(searchTerm) || id.includes(searchTerm)
+            })        
+        }
+
+        // watch for changes in the search term
+        watch(
+            () => state.searchTerm,
+            ( newTerm ) => {
+                searchForPokemon(newTerm)
+            }
+        )
 
 
         const onScroll = () => {

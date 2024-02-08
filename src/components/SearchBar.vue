@@ -16,40 +16,35 @@ import { computed, ref } from 'vue';
 
 export default {
     name: 'SearchBar',
-    props: {
-        pokemonData: {
-            type: Array,
-            required: true,
-        },
-    },
-    setup(props, { emit }) {
+    setup(_, { emit }) {
         const searchTerm = ref('')
+
 
         // computed property to check if the search button should be disabled
         const isSearchDisabled = computed(() => {
             return searchTerm.value === ''
         })
 
-        // search for pokemon by name or ID
-        const search = async () => {
+
+        // search for pokemon by name or ID (can be a substring of name or ID)
+        const search = async() => {
             try {
-                const term = (searchTerm.value).toLowerCase()
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`)
-                if ( !response.ok ) {
-                    throw new Error(`Error: ${response.status} ${response.statusText}`)
-                }
-                const data = await response.json()
+                const term = searchTerm.value.toLowerCase()
+
+                console.log('term')
+                console.log(term)
 
                 // emit the search result to the parent component
-                emit('search-result', [data])
+                emit('search-result', term)
 
-            } catch ( error ) {
+            } catch (error) {
                 console.log(error)
 
                 // emit the empty search result to the parent component
                 emit('empty-result')
             }
         }
+
 
         return {
             isSearchDisabled,
