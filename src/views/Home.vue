@@ -44,8 +44,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '@/assets/styles/global.scss';
-
 #home {
     .categories {
         .categories__element {

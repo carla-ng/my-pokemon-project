@@ -175,8 +175,6 @@
   
 
 <style lang="scss" scoped>
-@import '@/assets/styles/global.scss';
-
 #item-detail-view {
 
     #item-detailed-info {

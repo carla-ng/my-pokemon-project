@@ -458,9 +458,8 @@
   
 
 <style lang="scss" scoped>
-@import '@/assets/styles/global.scss';
-
 #pokemon-detail-view {
+
     #pokemon-main-info {
         img {
             max-width: 90%;

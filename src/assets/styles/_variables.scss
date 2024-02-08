@@ -1,0 +1,29 @@
+$pokemon-type-color: (
+    poison: #d296ed,
+    bug: #b3d374,
+    ground: #ff8054,
+    flying: #a2b3cb,
+    fairy: lightpink,
+    fighting: #ff7272,
+    psychic: plum,
+    dragon: silver,
+    dark: #7c7c7c,
+    ghost: #a0cad1,
+    steel: #a1a2a3,
+    rock: #a1a2a3,
+    ice: #89dceb,
+    electric: #ffe965,
+    grass: #62d5b4,
+    fire: #ffa761,
+    water: #8bacf6,
+    normal: #b9b7b7,
+);
+
+$palette-color-01: #8bacf6;  //water
+$palette-color-02: #ffa761;  //fire
+$palette-color-03: #62d5b4;  //grass
+$palette-color-04: #d296ed;  //poison
+$palette-color-05: #6366f1;
+
+$breakpoint-max-mobile: 767px;
+$breakpoint-min-desktop: 768px;
